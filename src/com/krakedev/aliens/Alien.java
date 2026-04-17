@@ -9,6 +9,7 @@ public class Alien {
 	private double precioExtremidad;
 	private double precioOjo;
 	private double precioCuerpo;
+	private double precioTotal = 0;
 
 	public Alien(int tamanio, String color) {
 		super();
@@ -58,22 +59,28 @@ public class Alien {
 		return precioCuerpo;
 	}
 
+	public double getPrecioTotal() {
+		return precioTotal;
+	}
+
 	public void imprimir() {
 		System.out.println("Tamaño: " + this.tamanio);
 		System.out.println("Color: " + this.color);
 		System.out.println("Número de ojos: " + this.numeroOjos);
 		System.out.println("Número de brazos: " + this.numeroBrazos);
-		System.out.println("Número de pies: " + this.numeroPiernas);
+		System.out.println("Número de piernas: " + this.numeroPiernas);
 
 		System.out.printf("Precio cuerpo: %.2f\n", this.precioCuerpo);
 		System.out.printf("Precio extremidad: %.2f\n", this.precioExtremidad);
 		System.out.printf("Precio ojo: %.2f\n", this.precioOjo);
+		System.out.printf("Precio Total: %.2f\n", this.precioTotal);
 	}
 
 	public boolean agregarBrazos(int cantidadBrazos) {
 		int cantidadExtremidades = this.numeroBrazos + this.numeroPiernas + cantidadBrazos;
 		if (cantidadExtremidades <= 10) {
 			this.numeroBrazos = this.numeroBrazos + cantidadBrazos;
+			calcularPrecioTotal();
 			return true;
 
 		} else {
@@ -85,6 +92,7 @@ public class Alien {
 		int cantidadExtremidades = this.numeroBrazos + this.numeroPiernas + cantidadPiernas;
 		if (cantidadExtremidades <= 10) {
 			this.numeroPiernas = this.numeroPiernas + cantidadPiernas;
+			calcularPrecioTotal();
 			return true;
 
 		} else {
@@ -105,10 +113,18 @@ public class Alien {
 
 		if (this.numeroOjos + cantidadOjos <= maximoOjos) {
 			this.numeroOjos = this.numeroOjos + cantidadOjos;
+			calcularPrecioTotal();
 			return true;
 		} else {
 			return false;
 		}
 	}
+	
+	public void calcularPrecioTotal() {
+		int cantidadExtre = this.numeroBrazos + this.numeroPiernas;
+		this.precioTotal = this.precioCuerpo+ (this.precioExtremidad * cantidadExtre) + (this.precioOjo*this.numeroOjos);
+		
+	}
+	
 
 }
